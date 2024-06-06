@@ -28,8 +28,13 @@ public class GameManager : MonoBehaviour // Make sure to inherit from MonoBehavi
     [SerializeField] private Text soruText; // Unity Editor üzerinden atama yapılacak
     [SerializeField] private GameObject bitisPanel; // Bitiş paneli
 
+    ScoreManager scoreManager; // ScoreManager örneği
+
     void Start()
     {
+        // ScoreManager'ı oluştur
+        scoreManager = new ScoreManager();
+
         if (soruText == null)
         {
             Debug.LogError("soruText alanı atanmamış!");
@@ -91,27 +96,29 @@ public class GameManager : MonoBehaviour // Make sure to inherit from MonoBehavi
         if (gecerlisoru.dogrumu)
         {
             Debug.Log("doğru cevapladınız");
-            LoadNextQuestion();
+            scoreManager.AddScore(10); // Doğru cevap için 10 puan ekleyin
         }
         else
         {
             Debug.Log("yanlış cevapladınız");
-            LoadNextQuestion();
+            scoreManager.AddScore(-5); // Yanlış cevap için 5 puan çıkarın
         }
+        LoadNextQuestion();
     }
 
-    public void yanlısButonaBasildi()
+    public void yanlisButonaBasildi()
     {
         if (!gecerlisoru.dogrumu)
         {
             Debug.Log("doğru cevapladınız");
-            LoadNextQuestion();
+            scoreManager.AddScore(10); // Doğru cevap için 10 puan ekleyin
         }
         else
         {
             Debug.Log("yanlış cevapladınız");
-            LoadNextQuestion();
+            scoreManager.AddScore(-5); // Yanlış cevap için 5 puan çıkarın
         }
+        LoadNextQuestion();
     }
 
     public void LoadNextQuestion()
@@ -124,6 +131,7 @@ public class GameManager : MonoBehaviour // Make sure to inherit from MonoBehavi
         else
         {
             Debug.Log("Tüm sorular cevaplandı!");
+            SceneManager.LoadScene(3);
             ShowEndPanel();
         }
     }

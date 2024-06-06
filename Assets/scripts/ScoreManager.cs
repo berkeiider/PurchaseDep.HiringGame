@@ -1,18 +1,18 @@
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI; // UI bileşenlerine erişim için
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
-    public Text scoreText;
-    private int score = 0;
+    private int score;
+    public Text scoreText; // Eski UI Text referansı
 
     void Awake()
     {
-        // Singleton pattern to ensure only one instance of ScoreManager exists
         if (instance == null)
         {
             instance = this;
+           // DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -25,14 +25,23 @@ public class ScoreManager : MonoBehaviour
         UpdateScoreText();
     }
 
-    public void AddScore(int points)
+    public void AddScore(int value)
     {
-        score += points;
+        score += value;
+        Debug.Log("Score: " + score);
         UpdateScoreText();
     }
 
-    void UpdateScoreText()
+    public int GetScore()
     {
-        scoreText.text = "Score: " + score.ToString();
+        return score;
+    }
+
+    private void UpdateScoreText()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + score;
+        }
     }
 }

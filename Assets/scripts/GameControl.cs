@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; // SceneManager'ı kullanabilmek için
 
 public class GameControl : MonoBehaviour
 {
@@ -78,8 +79,7 @@ public class GameControl : MonoBehaviour
             visibleFaces[0] = -1;
             visibleFaces[1] = -2;
             success = true;
-            // Eşleşme bulunduğunda puanı artır
-            ScoreManager.instance.AddScore(10);
+            ScoreManager.instance.AddScore(10); // Skor artırma
         }
         else
         {
@@ -93,5 +93,11 @@ public class GameControl : MonoBehaviour
     void Awake()
     {
         token = GameObject.Find("Token");
+    }
+
+    // Sahne geçiş fonksiyonu
+    public void LoadMathGameScene()
+    {
+        SceneManager.LoadScene("MathGameScene");
     }
 }
